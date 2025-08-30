@@ -5,103 +5,80 @@
   <title>Boîte à Suggestions - Label Prestige</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    .fade-in {
-      opacity: 0;
-      animation: fadeIn 2s forwards;
-    }
-    .fade-out {
-      opacity: 1;
-      animation: fadeOut 1.5s forwards;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    @keyframes fadeOut {
-      to { opacity: 0; }
-    }
+    .fade-in { opacity:0; animation:fadeIn 2s forwards; }
+    .fade-out { opacity:1; animation:fadeOut 1.5s forwards; }
+    @keyframes fadeIn { to{opacity:1;} }
+    @keyframes fadeOut { to{opacity:0;} }
   </style>
 </head>
 <body class="bg-gradient-to-r from-indigo-600 to-blue-500 flex justify-center items-center min-h-screen">
-  
-  <!-- Écran d'accroche -->
-  <div id="intro" class="text-center text-white text-4xl font-extrabold tracking-wide fade-in">
-    ✨ Des critiques, du prestige ✨
-  </div>
-  
-  <!-- Boîte à suggestion cachée au départ -->
-  <div id="suggestion-box" class="hidden bg-white shadow-2xl rounded-2xl p-8 max-w-lg w-full">
-    <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">💡 Boîte à Suggestions</h1>
-    <p class="text-gray-600 mb-6 text-center">Exprime tes idées pour améliorer le Label Prestige !</p>
-    
-    <form id="suggestion-form" class="space-y-4">
-      <div>
-        <label class="block text-gray-700 font-semibold mb-2">Nom (facultatif)</label>
-        <input type="text" name="nom" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none">
-      </div>
-      
-      <div>
-        <label class="block text-gray-700 font-semibold mb-2">Suggestion</label>
-        <textarea name="suggestion" rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" required></textarea>
-      </div>
-      
-      <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200">
-        Envoyer
-      </button>
-    </form>
-    
-    <p id="success-message" class="text-green-600 font-semibold mt-4 hidden text-center">✅ Merci pour ta suggestion !</p>
-    <p id="error-message" class="text-red-600 font-semibold mt-4 hidden text-center">❌ Erreur lors de l'envoi. Réessaie.</p>
-  </div>
-  
-  <script>
-    const intro = document.getElementById("intro");
-    const suggestionBox = document.getElementById("suggestion-box");
-    const form = document.getElementById("suggestion-form");
-    const successMessage = document.getElementById("success-message");
-    const errorMessage = document.getElementById("error-message");
 
-    // Animation d'intro
-    setTimeout(() => {
-      intro.classList.add("fade-out");
-      setTimeout(() => {
-        intro.style.display = "none";
-        suggestionBox.classList.remove("hidden");
-        suggestionBox.classList.add("fade-in");
-      }, 1500);
-    }, 2500);
+<div id="intro" class="text-center text-white text-4xl font-extrabold tracking-wide fade-in">
+  ✨ Des critiques, du prestige ✨
+</div>
 
-    // Soumission du formulaire
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+<div id="suggestion-box" class="hidden bg-white shadow-2xl rounded-2xl p-8 max-w-lg w-full">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">💡 Boîte à Suggestions</h1>
+  <p class="text-gray-600 mb-6 text-center">Exprime tes idées pour améliorer le Label Prestige !</p>
 
-      const data = {
-        nom: form.nom.value,
-        suggestion: form.suggestion.value
-      };
+  <form id="suggestion-form" class="space-y-4">
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Nom (facultatif)</label>
+      <input type="text" name="nom" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none">
+    </div>
 
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwPhd1hkz5s_8hp-eSx-PjqAPmDcMn-OVBFjqaCg4BHkJj1eF_9MSzkpXFA4aZlqbBA/exec", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json"
-          }
-        });
+    <div>
+      <label class="block text-gray-700 font-semibold mb-2">Suggestion</label>
+      <textarea name="suggestion" rows="4" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none" required></textarea>
+    </div>
 
-        const result = await response.json();
-        if (result.result === "success") {
-          successMessage.classList.remove("hidden");
-          errorMessage.classList.add("hidden");
-          form.reset();
-        } else {
-          throw new Error("Erreur API");
-        }
-      } catch (error) {
-        successMessage.classList.add("hidden");
-        errorMessage.classList.remove("hidden");
-        console.error(error);
-      }
-    });
-  </script>
+    <button type="submit" class="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition duration-200">
+      Envoyer
+    </button>
+  </form>
+
+  <p id="success-message" class="text-green-600 font-semibold mt-4 hidden text-center">✅ Merci pour ta suggestion !</p>
+  <p id="error-message" class="text-red-600 font-semibold mt-4 hidden text-center">❌ Erreur lors de l'envoi.</p>
+</div>
+
+<script>
+const intro = document.getElementById("intro");
+const suggestionBox = document.getElementById("suggestion-box");
+const form = document.getElementById("suggestion-form");
+const successMessage = document.getElementById("success-message");
+const errorMessage = document.getElementById("error-message");
+
+// Animation d'intro
+setTimeout(() => {
+  intro.classList.add("fade-out");
+  setTimeout(() => {
+    intro.style.display = "none";
+    suggestionBox.classList.remove("hidden");
+    suggestionBox.classList.add("fade-in");
+  }, 1500);
+}, 2500);
+
+// Envoi vers Google Form
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const nom = encodeURIComponent(form.nom.value);
+  const suggestion = encodeURIComponent(form.suggestion.value);
+
+  // Remplace ces entry.xxxxx par tes vrais IDs du Form
+  const googleFormUrl = `https://docs.google.com/forms/d/e/1FAIpQLScsjxuSbgljO1i9vkcso5LBwxzV_m5xYt13uTXZY2m4rID3GA/formResponse?usp=pp_url&entry.485098768=${nom}&entry.1870114556=${suggestion}`;
+
+  try {
+    await fetch(googleFormUrl, { method: "POST", mode: "no-cors" }); // no-cors pour contourner restrictions
+    successMessage.classList.remove("hidden");
+    errorMessage.classList.add("hidden");
+    form.reset();
+  } catch(err) {
+    successMessage.classList.add("hidden");
+    errorMessage.classList.remove("hidden");
+    console.error(err);
+  }
+});
+</script>
 </body>
 </html>
